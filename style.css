@@ -1,0 +1,27 @@
+#table {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#question-container {
+    display: flex;
+    gap: 40px
+}
+
+#question {
+    display: flex;
+    gap: 3px
+}
+
+#card {
+    font-weight: 600;
+    font-size: 20;
+    background-color: beige;
+    width: 40;
+    height: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
