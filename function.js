@@ -14,17 +14,17 @@ const WordPuzzle = {
 };
 
 const checkKeyword = (keyWordIndex, questionList) => {
-  questionList.map((question, index) => {
-    console.log(keyWordIndex[index], question);
+  let isValid = true;
+  questionList.find((question, index) => {
     if (keyWordIndex[index] >= question.length) {
       alert(
         `Vị trí keyword: ${keyWordIndex[index]} trong từ ${question} không hợp lệ`
       );
-      return false;
+      isValid = false;
     }
   });
 
-  return true;
+  return isValid;
 };
 
 const table = document.getElementById("table");
@@ -64,44 +64,44 @@ const printWordPuzzle = () => {
 
   if (!checkKeyword(WordPuzzle.KeyWordIndex, WordPuzzle.QuestionList)) {
     return;
-  } else {
-    WordPuzzle.QuestionList.map((word, index) => {
-      const insertedWord = new QuestionWord(
-        index + 1,
-        word,
-        word[WordPuzzle.KeyWordIndex[index]],
-        WordPuzzle.KeyWordIndex[index]
-      );
-
-      if (longestIndex < insertedWord.keyWordIndex) {
-        longestIndex = insertedWord.keyWordIndex;
-      }
-
-      listWords.push(insertedWord);
-    });
-
-    listWords.map((word) => {
-      const cloneContainer = questionContainer.cloneNode(true);
-      cloneContainer
-        .querySelector("#question-number")
-        .append(cloneCard(word.number));
-
-      // Adding blank space for the words
-      for (let i = 0; i < longestIndex - word.keyWordIndex; i++) {
-        cloneContainer.querySelector("#question").append(cloneCard("", true));
-      }
-
-      word.question.split("").map((character, index) => {
-        cloneContainer
-          .querySelector("#question")
-          .append(cloneCard(character, false, index === word.keyWordIndex));
-      });
-
-      table.appendChild(cloneContainer);
-    });
-
-    card.style.display = "none";
   }
+
+  WordPuzzle.QuestionList.map((word, index) => {
+    const insertedWord = new QuestionWord(
+      index + 1,
+      word,
+      word[WordPuzzle.KeyWordIndex[index]],
+      WordPuzzle.KeyWordIndex[index]
+    );
+
+    if (longestIndex < insertedWord.keyWordIndex) {
+      longestIndex = insertedWord.keyWordIndex;
+    }
+
+    listWords.push(insertedWord);
+  });
+
+  listWords.map((word) => {
+    const cloneContainer = questionContainer.cloneNode(true);
+    cloneContainer
+      .querySelector("#question-number")
+      .append(cloneCard(word.number));
+
+    // Adding blank space for the words
+    for (let i = 0; i < longestIndex - word.keyWordIndex; i++) {
+      cloneContainer.querySelector("#question").append(cloneCard("", true));
+    }
+
+    word.question.split("").map((character, index) => {
+      cloneContainer
+        .querySelector("#question")
+        .append(cloneCard(character, false, index === word.keyWordIndex));
+    });
+
+    table.appendChild(cloneContainer);
+  });
+
+  card.style.display = "none";
 };
 
 printWordPuzzle();
