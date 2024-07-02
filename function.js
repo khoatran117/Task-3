@@ -33,15 +33,6 @@ const questionNumber = document.getElementById("question-number");
 const questionTxt = document.getElementById("question");
 const card = document.getElementById("card");
 
-class QuestionWord {
-  constructor(number, question, keyWord, keyWordIndex) {
-    this.number = number;
-    this.question = question;
-    this.keyWord = keyWord;
-    this.keyWordIndex = keyWordIndex;
-  }
-}
-
 const cloneCard = (content, isBlank = false, isHighLight = false) => {
   const cloneCard = card.cloneNode(true);
   cloneCard.innerHTML = content;
@@ -67,12 +58,12 @@ const printWordPuzzle = () => {
   }
 
   WordPuzzle.QuestionList.map((word, index) => {
-    const insertedWord = new QuestionWord(
-      index + 1,
-      word,
-      word[WordPuzzle.KeyWordIndex[index]],
-      WordPuzzle.KeyWordIndex[index]
-    );
+    const insertedWord = {
+      number: index + 1,
+      question: word,
+      keyWord: word[WordPuzzle.KeyWordIndex[index]],
+      keyWordIndex: WordPuzzle.KeyWordIndex[index],
+    };
 
     if (longestIndex < insertedWord.keyWordIndex) {
       longestIndex = insertedWord.keyWordIndex;
